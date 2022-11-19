@@ -6,6 +6,92 @@ map<string, int> getCoins;
 bool gameOn = true;
 string currentEmail;
 
+void operationSelector();
+
+void addCoins(string email)
+{
+    cout << "Enter the ammount you wish to add\n";
+    int ammount;
+    cin >> ammount;
+    getCoins[currentEmail] += ammount;
+}
+
+bool emailValidator(string email)
+{
+    string allLowercase = email;
+    for (int i = 0; i < email.size(); i++)
+    {
+        if (allLowercase[i] >= 65 and allLowercase[i] <= 90)
+        {
+            allLowercase[i] += 32;
+        }
+    }
+    if (allLowercase != email)
+    {
+        return false;
+    }
+
+    bool atPresent = false;
+    for (int i = 0; i < email.size(); i++)
+    {
+        if (email[i] == '@')
+        {
+            atPresent = true;
+        }
+    }
+
+    if (!atPresent)
+    {
+        return false;
+    }
+
+    if (email.size() < 5)
+    {
+        return false;
+    }
+
+    int n = email.size();
+    bool good = false;
+    if (email[n - 3] == '.' and email[n - 2] == 'i' and email[n - 1] == 'n')
+    {
+        good = true;
+    }
+
+    if (email[n - 4] == '.' and email[n - 3] == 'c' and email[n - 2] == 'o' and email[n - 1] == 'm')
+    {
+        good = true;
+    }
+
+    return good;
+}
+
+void getRules()
+{
+    cout << "------------------------------------------\n";
+    cout << "RULES\n";
+    cout << "This is a game in which you are supposed to guess the color of the casion chip and bet a certain ammount.\n";
+    cout << "To play this game you must login with a already registered email ID or register a new email ID\n";
+    cout << "This game also have a leaderboard in which you can see the coins of top players\n";
+    cout << "------------------------------------------\n";
+
+    return;
+}
+
+int getYourRanking(string email)
+{
+    int yourScore = getCoins[email];
+    int ranking = 1;
+    for (auto i : getCoins)
+    {
+        if (yourScore < i.second)
+        {
+            ranking++;
+        }
+    }
+
+    return ranking;
+}
+
 void gameStart()
 {
     bool stillPlaying = true;
