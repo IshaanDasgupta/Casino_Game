@@ -142,6 +142,7 @@ void gameStart()
         cout << "1 to play again\n";
         cout << "2 to add balance\n";
         cout << "3 to signout and quit\n";
+        cout << "4 to get your ranking\n";
         cout << "------------------------------------------\n";
 
         int operation;
@@ -154,6 +155,11 @@ void gameStart()
         {
             currentEmail = "";
             operationSelector();
+        }
+
+        if (operation == 4)
+        {
+            cout << "Your current rank is : " << getYourRanking(currentEmail) << " with total coins : " << getCoins[currentEmail] << "\n";
         }
 
         if (stillPlaying)
@@ -209,15 +215,17 @@ void registerUser()
         {
             return;
         }
+        string currEmail;
         while (!emailValidator(enteredEmail))
         {
             cout << "The previously entred email is invalid please enter a correct email or input X to exit\n";
-            string enteredEmail;
-            cin >> enteredEmail;
-            if (enteredEmail == "X")
+            string currEmail;
+            cin >> currEmail;
+            if (currEmail == "X")
             {
                 return;
             }
+            enteredEmail = currEmail;
         }
         cout << "Enter password\n";
         string enteredPassword;
@@ -286,7 +294,6 @@ void operationSelector()
     cout << "2 to Sign in\n";
     cout << "3 to view Leaderboard\n";
     cout << "4 to view Rules\n";
-    cout << "5 to get your ranking\n";
     cout << "------------------------------------------\n";
 
     int operation;
@@ -295,34 +302,29 @@ void operationSelector()
     {
     case 1:
         registerUser();
-        return;
+        break;
 
     case 2:
         signInUser();
-        return;
+        break;
 
     case 3:
         printHighScore();
-        return;
+        break;
 
     case 4:
         getRules();
-        return;
-
-    case 5:
-        cout << "Your current rank is : " << getYourRanking(currentEmail) << " with total coins : " << getCoins[currentEmail];
-        return;
+        break;
     }
 
     if (gameOn)
     {
         operationSelector();
     }
-}
+};
 
 int main()
 {
-    if (gameOn)
     {
         operationSelector();
     }

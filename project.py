@@ -65,8 +65,11 @@ def getYourRanking(email):
     global gameOn;
     yourScore = getCoins[email];
     ranking = 1;
-    for email,coin in getCoins:
-        if (yourScore < coin):
+
+    keys = getCoins.keys();
+
+    for key in keys:
+        if (yourScore < getCoins[key]):
             ranking += 1;
 
     return ranking;
@@ -107,6 +110,7 @@ def gameStart():
         print("1 to play again");
         print("2 to add balance");
         print("3 to signout and quit");
+        print("4 to get your ranking");
         print("------------------------------------------");
 
         operation = int(input());
@@ -115,6 +119,15 @@ def gameStart():
         if (operation == 3):
             currentEmail = "";
             operationSelector();
+
+        if operation == 4:
+            if (len(currentEmail) == 0):
+                print("Please sign in to get your leaderboard ranking");
+            else:
+                print("Youre current rank is : " , getYourRanking(currentEmail) , " with total coins : " , getCoins[currentEmail]);
+            
+            gameStart();
+        
 
         if (stillPlaying):
             gameStart();
@@ -127,13 +140,17 @@ def printHighScore():
     global getCoins;
     global gameOn;
     coins = [];
-    for email,coin in getCoins:
-        coins.append(coin);
+
+    keys = getCoins.keys();
+
+    for key in keys:
+        coins.append(getCoins[key]);
     
     coins.sort();
     first = 0;
     second = 0;
     third = 0;
+
 
     i = len(coins) - 1;
     while i>=0:
@@ -246,13 +263,6 @@ def operationSelector():
 
     if operation == 4:
         getRules();
-
-    if operation == 5:
-        if (len(currentEmail) == 0):
-            print("Please sign in to get your leaderboard ranking");
-        else:
-            print("Youre current rank is : " , getYourRanking(currentEmail) , " with total coins : " , getCoins[currentEmail]);
-    
 
     if (gameOn):
         operationSelector();
